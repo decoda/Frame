@@ -129,10 +129,15 @@ namespace Network
                         {
                             continue;
                         }
+                        if (!c.socket.Poll(10, SelectMode.SelectRead))
+                        {
+                            continue;
+                        }
 
                         int receiveSize = c.socket.Receive(MessageBuffer.head, MessageBuffer.MESSAGE_HEAD_SIZE, SocketFlags.None);
                         if (receiveSize == 0)
                         {
+                            c.Disconnect();
                             continue;
                         }
 

@@ -422,7 +422,9 @@ public class FrameScene : GameScene, IReceiverHandler
             return;
         }
 
-        mCurrentFrame = recvData.frame;
+        long frame = recvData.frame;
+
+        mCurrentFrame = frame;
 
        
         //不打印那么多信息
@@ -440,11 +442,11 @@ public class FrameScene : GameScene, IReceiverHandler
             GMCommand cmd = recvData.command[i];
             Command data = new Command(cmd.id, cmd.frame, cmd.type, cmd.data, cmd.frametime );
 
-            if (mFrameDic.ContainsKey(mCurrentFrame) == false)
+            if (mFrameDic.ContainsKey(frame) == false)
             {
-                mFrameDic.Add(mCurrentFrame, new List<Command>());
+                mFrameDic.Add(frame, new List<Command>());
             }
-            mFrameDic[mCurrentFrame].Add(data);
+            mFrameDic[frame].Add(data);
 
             DoCommand(data);
         }
